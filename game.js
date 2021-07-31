@@ -5,7 +5,7 @@ async function YouAreDead() {
     await show('THE END');
 }
 
-whenready(async () => {
+async function Scene1() {
 
     await show('Start'); // Needed because browser does not like to play music if no one asked
 
@@ -27,8 +27,14 @@ whenready(async () => {
         return; // Return means not to continue with the story
     }
 
-    await show('Good choice you survived');
+    await show(randompick(
+        'Good choice you survived',
+        'The choice was good, bless you',
+        'Yeah you won!'
+    ));
 
     music();
 
-});
+}
+
+whenready(Scene1);

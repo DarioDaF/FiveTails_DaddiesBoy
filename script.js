@@ -88,3 +88,7 @@ async function music(name, loop = true) {
 function whenready(f) {
     ready.promise.then(f);
 }
+
+function randompick(...args) {
+    return args[Math.floor(Math.random() * args.length)];
+}
