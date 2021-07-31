@@ -94,7 +94,9 @@ function randompick(...args) {
 }
 
 function SceneHandler(scene) {
-    while(scene) {
-        scene = await scene();
+    return async () => {
+        while(scene) {
+            scene = await scene();
+        }
     }
 }
