@@ -9,7 +9,7 @@ async function Scene1() {
 
     await show('Start'); // Needed because browser does not like to play music if no one asked
 
-    music('Fear lol fi.ogg');
+    music('Fear lol fi.wav');
 
     await show('Hi there, its been some time. I would love to see how you changed. No mater who you are, I will alwas love you.');
     await show('Summer of 99XD the coldest n yeares.');
