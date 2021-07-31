@@ -92,3 +92,9 @@ function whenready(f) {
 function randompick(...args) {
     return args[Math.floor(Math.random() * args.length)];
 }
+
+function SceneHandler(scene) {
+    while(scene) {
+        scene = await scene();
+    }
+}
