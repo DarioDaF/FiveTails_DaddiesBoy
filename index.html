@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Daddies Boy</title>
+        <script src="script.js"></script>
+        <script src="game.js"></script>
+        <style>
+
+html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    background: black;
+    overflow: hidden;
+}
+
+#main {
+    margin: 1em;
+}
+
+#novelText {
+    display: flex;
+    justify-content: center;
+    color: white;
+    font: 3em sans-serif;
+}
+#choices {
+    color: white;
+    font: 3em sans-serif;
+}
+
+#choices li:hover {
+    color: lightblue;
+}
+
+        </style>
+    </head>
+    <body>
+        <div id="main">
+            <audio id="audioPlayer"></audio>
+            <div id="novelText">Loading...</div>
+            <ul id="choices"></ul>
+        </div>
+    </body>
+</html>
