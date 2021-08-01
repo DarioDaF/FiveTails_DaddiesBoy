@@ -54,7 +54,11 @@ export async function show(text) {
 export async function image(name) {
     if(name) {
         $novelImage.style.display = 'flex';
-        $novelImage.style.backgroundImage = 'url("./image/' + name + '")';
+        if(name.indexOf('://') >= 0) {
+            $novelImage.style.backgroundImage = 'url("' + name + '")';
+        } else {
+            $novelImage.style.backgroundImage = 'url("./image/' + name + '")';
+        }
     } else {
         $novelImage.style.display = 'none';
     }
