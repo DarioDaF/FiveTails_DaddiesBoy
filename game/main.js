@@ -10,18 +10,86 @@ import { observer } from 'https://unpkg.com/mobx-preact@3?module';
 
 
 const m = observable({
-    player: {
-        AgitLE: 12,
-        RubenLE: 13
+    img: 'image/woods.jpg',
+    text: '',
+    talk: {
+        left: {
+            img: '',
+            gray: false,
+            inScene: false
+        },
+        right: {
+            img: '',
+            gray: false,
+            inScene: false
+        }
     }
 });
 window.model = m;
 
-
 const dbg = observer(() => html`
-    <p>AgitLE: ${m.player.AgitLE}</p><p>RubenLE: ${m.player.RubenLE}</p>
+<div id="block">
+    <style>
+#block {
+    width: 80%;
+    height: 20em;
+}
+#scene {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center bottom;
+    overflow: hidden;
+}
+#left, #right {
+    position: absolute;
+    bottom: 0;
+    width: 30%;
+    height: 80%;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center bottom;
+    transition: margin 2s, filter 1s;
+}
+#left {
+    left: 0;
+}
+#right {
+    right: 0;
+}
+.outOfScene {
+    margin: 0 -5em;
+}
+.gray {
+    filter: grayscale(1);
+}
+#bottomText {
+    position: relative;
+    bottom: 0;
+}
+    </style>
+    <div id="scene" style="background-image: url('${m.img}');">
+        <div id="left" class="${ !m.talk.left.inScene ? 'outOfScene' : '' } ${ m.talk.left.gray ? 'gray' : '' }" style="background-image: url('${m.talk.left.img}');"></div>
+        <div id="right" class="${ !m.talk.right.inScene ? 'outOfScene' : '' } ${ m.talk.right.gray ? 'gray' : '' }" style="background-image: url('${m.talk.right.img}');"></div>
+    </div>
+    <div id="novelText">${m.text}</div>
+</div>
 `);
 render(html`<${dbg} />`, document.getElementById('debug'));
+
+async function talk(who, where, text) {
+    for(const [ side, val ] of Object.entries(m.talk)) {
+        if(side === where) continue;
+        val.gray = true;
+    }
+    m.talk[where].img = 'image/people/' + who + '.png';
+    m.talk[where].gray = false;
+    m.talk[where].inScene = true;
+    m.text = text;
+    await show();
+}
 
 
 async function AgiteLE_Zero() {
@@ -40,9 +108,10 @@ async function Intro() {
 
     music('Fear lol fi.ogg');
 
-    await show('Hi there, its been some time. I would love to see how you changed. No mater who you are, I will alwas love you.');
-    await show('Summer of 99XD the coldest n yeares.');
-    await show('My hart shades is what makes me the person I ment out to be. All my pain is a promotion for hem. The, more, I try, he deepert y hart shadesm.');
+    await talk('Death', 'left', 'Hi there, its been some time. I would love to see how you changed. No mater who you are, I will alwas love you.');
+    await talk('Tyler', 'right', 'Summer of 99XD the coldest n yeares.');
+    await talk('Death', 'left', 'Lol this works');
+    await talk('GMa', 'right', 'My hart shades is what makes me the person I ment out to be. All my pain is a promotion for hem. The, more, I try, he deepert y hart shadesm.');
     await show('So this is it.')
     await show('Fivery, the hole super cojia put us here.')
     await show('Only for are minds?')

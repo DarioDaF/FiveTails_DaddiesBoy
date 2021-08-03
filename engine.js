@@ -47,7 +47,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 export async function show(text) {
     currentPromise.refresh(); // To avoid problems
-    $novelText.textContent = text;
+    //$novelText.textContent = text;
     return await currentPromise.reusable();
 }
 
@@ -94,7 +94,11 @@ export async function ask(text, options) {
 
 export async function music(name, loop = true) {
     if(name) {
-        $audioPlayer.src = './music/' + name;
+        if(name.indexOf('://') >= 0) {
+            $audioPlayer.src = name;
+        } else {
+            $audioPlayer.src = './music/' + name;
+        }
         $audioPlayer.loop = loop;
         await $audioPlayer.play();
     } else {
