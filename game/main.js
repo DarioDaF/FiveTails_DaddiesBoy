@@ -2,22 +2,26 @@
 import * as e from '../engine.js';
 const { music, show, ask, randompick } = e;
 
-import hypersimple from '../hypersimple.js';
-const { comp, html, render, update } = hypersimple;
+
+import { html, render } from 'https://unpkg.com/htm/preact/index.mjs?module';
+
+import { observable } from 'https://unpkg.com/mobx@5?module';
+import { observer } from 'https://unpkg.com/mobx-preact@3?module';
 
 
-// Model MUST be flat for hypersimple to work
-const m = {
-    player_AgitLE: 12,
-    player_RubenLE: 13
-};
+const m = observable({
+    player: {
+        AgitLE: 12,
+        RubenLE: 13
+    }
+});
 window.model = m;
 
 
-const dbg = comp(m => html`
-    <p>AgitLE: ${m.player_AgitLE}</p><p>RubenLE: ${m.player_RubenLE}</p>
+const dbg = observer(() => html`
+    <p>AgitLE: ${m.player.AgitLE}</p><p>RubenLE: ${m.player.RubenLE}</p>
 `);
-render(document.getElementById('debug'), () => dbg(m));
+render(html`<${dbg} />`, document.getElementById('debug'));
 
 
 async function AgiteLE_Zero() {
@@ -68,8 +72,8 @@ async function Scene1() {
 
     if(direction === 'W') {
         await show('You and Agit go to the spot for it to be ematy it doesn-t make since. There uset to be living here, you though.');
-        m.player_AgitLE -= 2;
-        if(m.player_AgitLE <= 0) {
+        m.player.AgitLE -= 2;
+        if(m.player.AgitLE <= 0) {
             return AgiteLE_Zero;
         }
         await show('It be okay we go though this every 60s years Sobo.You was the lucky one.');
@@ -85,12 +89,12 @@ async function Scene1() {
         await show('No wait, I don\'t think we need to relive this day.');
         await show('Agit Sobo is crying.');
         await show('What is he younger already?');
-        m.player_AgitLE -= 2;
-        m.player_RubenLE += 2;
+        m.player.AgitLE -= 2;
+        m.player.RubenLE += 2;
         await show("Should we take him to his lover.")
         await show("Will let his spirit do that for him.")
         await show("You felt sleepy.")
-        m.player_AgitLE += 5;
+        m.player.AgitLE += 5;
         await show('2003AD');
         await show('So odd boy why are you confused still on the future.');
         await show('Father why you just changed time now he\'s alive!?');
@@ -104,18 +108,18 @@ async function Scene1() {
         
         if(direction != '19') {
             await show('You have been attacket by the Goblins');
-            m.player_AgitLE -= 13;
+            m.player.AgitLE -= 13;
             return Scene1;
         }
 
         if(direction != '16') {
             await show('Sobo when ever you have the chance, take Agit out please? He must be nverce of losing you.');
-            m.player_AgitLE += 13;
+            m.player.AgitLE += 13;
         }
     } else if(direction === 'E') {
         await show('You have been attacket by the Goblins');
-        m.player_RubenLE -= 13;
-        if(m.player_RubenLE <= 0) {
+        m.player.RubenLE -= 13;
+        if(m.player.RubenLE <= 0) {
             return RubenLE_Zero;
         }
     }
